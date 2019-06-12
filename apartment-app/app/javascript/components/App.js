@@ -1,5 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { HashRouter as Router } from 'react-router-dom'
+import Routes from './Routes'
 
 export default class App extends React.Component {
   render () {
@@ -23,6 +25,10 @@ export default class App extends React.Component {
             <a href={ sign_in_route }>Sign In</a>
           </div>
         }
+        
+        <Router>
+          <Routes />
+        </Router>
       </React.Fragment>
     )
   }
