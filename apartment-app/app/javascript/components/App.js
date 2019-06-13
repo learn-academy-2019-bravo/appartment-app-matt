@@ -5,31 +5,16 @@ import Routes from './Routes'
 
 export default class App extends React.Component {
   render () {
-    const {
-      logged_in,
-      sign_in_route,
-      sign_out_route
-    } = this.props
+    const { logged_in, sign_in_route, sign_out_route } = this.props
     return (
       <React.Fragment>
         <Router>
-          <Routes />
+          <Routes
+            logged_in={ logged_in }
+            sign_in_route={ sign_in_route }
+            sign_out_route={ sign_out_route }
+          />
         </Router>
-        
-        {logged_in &&
-          <div>
-            <h5>You are logged in!</h5>
-            <a href={ sign_out_route }>Sign Out</a>
-          </div>
-        }
-        
-        {!logged_in &&
-          <div>
-            <h5>You aren't logged in! Please sign in.</h5>
-            <a href={ sign_in_route }>Sign In</a>
-          </div>
-        }
-        
       </React.Fragment>
     )
   }
