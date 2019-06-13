@@ -12,6 +12,10 @@ export default class App extends React.Component {
     } = this.props
     return (
       <React.Fragment>
+        <Router>
+          <Routes />
+        </Router>
+        
         {logged_in &&
           <div>
             <h3>You are logged in!</h3>
@@ -26,9 +30,6 @@ export default class App extends React.Component {
           </div>
         }
         
-        <Router>
-          <Routes />
-        </Router>
       </React.Fragment>
     )
   }
