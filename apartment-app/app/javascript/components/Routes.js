@@ -17,18 +17,19 @@ import {
 //Routes
 import Apartments from './Apartments'
 import Landing from './Landing'
+import NewApartment from './NewApartment'
 import SignIn from './SignIn'
 
 
 export default class Routes extends React.Component {
   constructor(props) {
     super(props)
-
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
     }
   }
+  
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -38,6 +39,7 @@ export default class Routes extends React.Component {
   
   render () {
     const { logged_in, sign_in_route, sign_out_route } = this.props
+    const { apartments } = this.state
     return (
       <React.Fragment>
         <Navbar color="light" light expand="md">
@@ -46,8 +48,13 @@ export default class Routes extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="#apartments">Apartments</NavLink>
+                <NavLink href="#apartments">All Apartments</NavLink>
               </NavItem>
+              {logged_in &&
+                <NavItem>
+                  <NavLink href="#newapartment">Register an Apartment</NavLink>
+                </NavItem>
+              }
               <NavItem>
                 {!logged_in &&
                   <NavLink href="#users/sign_in">Sign In</NavLink>
@@ -78,7 +85,7 @@ export default class Routes extends React.Component {
         </Navbar>
         <Switch>
             <Route exact path='/' component={ Landing } />
-            <Route path='/apartments' component={ Apartments } />
+            <Route path='/apartments' render={(props) => <Apartments apartments={ apartments } /> } />
             <Route
               path='/users/sign_in'
               render={(props) => <SignIn
@@ -87,6 +94,7 @@ export default class Routes extends React.Component {
                 sign_out_route={ sign_out_route }
               /> }
             />
+            <Route path='/newapartment' component={ NewApartment } />
         </Switch>
       </React.Fragment>
     )

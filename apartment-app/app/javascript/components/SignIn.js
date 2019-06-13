@@ -8,14 +8,14 @@ export default class SignIn extends React.Component {
       <React.Fragment>
         {logged_in &&
           <div>
-            <h5>You are logged in!</h5>
+            <h5>You are signed in!</h5>
             <a href={ sign_out_route }>Sign Out</a>
           </div>
         }
         
         {!logged_in &&
           <div>
-            <h5>You aren't logged in! Please sign in.</h5>
+            <h5>You aren't signed in! Please sign in.</h5>
             <a href={ sign_in_route }>Sign In</a>
           </div>
         }

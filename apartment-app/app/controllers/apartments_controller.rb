@@ -2,7 +2,8 @@ class ApartmentsController < ApplicationController
     before_action :set_apartment, only: [:show, :update, :destroy]
     
     def index
-       @apartments = Apartment.all 
+       apartments = Apartment.all
+       render json: apartments
     end
     
     def show
@@ -13,7 +14,7 @@ class ApartmentsController < ApplicationController
     end
     
     def edit
-       @apartment = current_user.apartments.find params[:id] 
+       @apartment = current_user.apartments.find(params[:id])
     end
     
     def create
@@ -22,7 +23,7 @@ class ApartmentsController < ApplicationController
        respond_to do |format|
           if @apartment.save
               format.html { redirect_to @apartment, notice: 'Apartment was successfully created.' }
-              format.json { render :show, status :created, location: @apartment }
+              format.json { render :show, status: :created, location: @apartment }
           else
               format.html { render :new }
               format.json { render json: @apartment.errors, status: :unprocessable_entity }
@@ -31,6 +32,10 @@ class ApartmentsController < ApplicationController
     end
     
     private
+    
+    def set_apartment
+       @apartment = Apartment.find(params[:id]) 
+    end
     
     def apartment_params
        params.require(:apartment).permit(:street_1, :street_2, :city, :postal_code, :state, :country)
