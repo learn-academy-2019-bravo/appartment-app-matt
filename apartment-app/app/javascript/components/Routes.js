@@ -1,26 +1,72 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Route, Switch } from 'react-router-dom'
-import { Nav, Navbar } from 'react-bootstrap'
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem } from 'reactstrap'
 
 //Routes
 import Landing from './Landing'
 
 
 export default class Routes extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    }
+  }
+  toggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+  
+  
   render () {
     return (
       <React.Fragment>
-        <Navbar id="navbar" bg="blue" expand="lg">
-          <Navbar.Brand id="title" href="/">Apartmentalize</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#createprofile">Create Profile</Nav.Link>
-              <Nav.Link href="#profiles">All Cats</Nav.Link>
-              <Nav.Link href="#">Pending Requests</Nav.Link>
+        <Navbar color="light" light expand="md">
+          <NavbarBrand href="/">Apartmentalize</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={this.state.isOpen} navbar>
+            <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink href="#">Apartments</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="#">GitHub</NavLink>
+              </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Options
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem>
+                    Option 1
+                  </DropdownItem>
+                  <DropdownItem>
+                    Option 2
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>
+                    Reset
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </Nav>
-          </Navbar.Collapse>
+          </Collapse>
         </Navbar>
         <Switch>
           <Route exact path='/' component={ Landing } />

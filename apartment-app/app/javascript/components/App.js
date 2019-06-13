@@ -18,14 +18,14 @@ export default class App extends React.Component {
         
         {logged_in &&
           <div>
-            <h3>You are logged in!</h3>
+            <h5>You are logged in!</h5>
             <a href={ sign_out_route }>Sign Out</a>
           </div>
         }
         
         {!logged_in &&
           <div>
-            <h3>You aren't logged in! Please sign in.</h3>
+            <h5>You aren't logged in! Please sign in.</h5>
             <a href={ sign_in_route }>Sign In</a>
           </div>
         }

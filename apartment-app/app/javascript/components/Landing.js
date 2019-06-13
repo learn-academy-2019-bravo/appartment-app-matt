@@ -5,7 +5,7 @@ export default class Landing extends React.Component {
   render () {
     return (
       <React.Fragment>
-        <h1>Welcome to Apartmentalize!</h1>
+        <h3>Welcome to Apartmentalize, where property management is made easy.</h3>
       </React.Fragment>
     )
   }
