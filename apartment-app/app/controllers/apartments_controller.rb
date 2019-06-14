@@ -10,7 +10,8 @@ class ApartmentsController < ApplicationController
     end
     
     def new
-       @apartment = Apartment.new 
+      apartment = Apartment.new
+      render json: apartment
     end
     
     def edit
@@ -18,17 +19,24 @@ class ApartmentsController < ApplicationController
     end
     
     def create
-       @apartment = current_user.apartments.new(apartment_params)
+       apartment = current_user.apartments.create(apartment_params)
        
-       respond_to do |format|
-          if @apartment.save
-              format.html { redirect_to @apartment, notice: 'Apartment was successfully created.' }
-              format.json { render :show, status: :created, location: @apartment }
+      respond_to do |format|
+          if apartment.save
+              format.html { redirect_to apartment, notice: 'Apartment was successfully created.' }
+              format.json { render :show, status: :created, location: apartment }
           else
               format.html { render :new }
-              format.json { render json: @apartment.errors, status: :unprocessable_entity }
+              format.json { render json: apartment.errors, status: :unprocessable_entity }
           end
-       end
+      end
+      
+    #   if apartment.valid?
+    #     render json: apartment
+    #   else
+    #     render json: apartment.errors, status: :unprocessable_entity
+    #   end
+       
     end
     
     private

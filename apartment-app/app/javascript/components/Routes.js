@@ -27,6 +27,7 @@ export default class Routes extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      apartments: []
     }
   }
   
@@ -36,10 +37,45 @@ export default class Routes extends React.Component {
     })
   }
   
+  componentDidMount = () => {
+    const { apartments } = this.state
+    fetch('/apartments.json')
+      .then(response => { return response.json() })
+      .then(data => { this.setState({ apartments: data })})
+  }
+  
+  handleNewApartment = newApartmentInfo => {
+    const { apartments } = this.state
+    fetch('/apartments.json', {
+      body: JSON.stringify(newApartmentInfo),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+    .then(resp => {
+      let json = resp.json()
+      return json
+    })
+  }
   
   render () {
     const { logged_in, sign_in_route, sign_out_route } = this.props
     const { apartments } = this.state
+    const allApartments = apartments.map(apartment => {
+      return (
+        <div key={apartment.id}>
+          <p>{apartment.street_1}</p>
+          <p>{apartment.street_2}</p>
+          <p>{apartment.city}</p>
+          <p>{apartment.postal_code}</p>
+          <p>{apartment.state}</p>
+          <p>{apartment.country}</p>
+          <hr/>
+          <br/>
+        </div>
+      )
+    })
     return (
       <React.Fragment>
         <Navbar color="light" light expand="md">
@@ -85,16 +121,35 @@ export default class Routes extends React.Component {
         </Navbar>
         <Switch>
             <Route exact path='/' component={ Landing } />
-            <Route path='/apartments' render={(props) => <Apartments apartments={ apartments } /> } />
+            <Route
+              path='/apartments'
+              render={
+                (props) =>
+                <Apartments
+                  allApartments={ allApartments }
+                />
+              }
+            />
             <Route
               path='/users/sign_in'
-              render={(props) => <SignIn
-                logged_in={ logged_in }
-                sign_in_route={ sign_in_route }
-                sign_out_route={ sign_out_route }
-              /> }
+              render={
+                (props) =>
+                <SignIn
+                  logged_in={ logged_in }
+                  sign_in_route={ sign_in_route }
+                  sign_out_route={ sign_out_route }
+                />
+              }
             />
-            <Route path='/newapartment' component={ NewApartment } />
+            <Route
+              path='/newapartment'
+              render={
+                (props) => 
+                <NewApartment
+                  handleNewApartment={ this.handleNewApartment }
+                />
+              }
+            />
         </Switch>
       </React.Fragment>
     )
