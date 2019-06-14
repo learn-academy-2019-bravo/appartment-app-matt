@@ -62,20 +62,6 @@ export default class Routes extends React.Component {
   render () {
     const { logged_in, sign_in_route, sign_out_route } = this.props
     const { apartments } = this.state
-    const allApartments = apartments.map(apartment => {
-      return (
-        <div key={apartment.id}>
-          <p>{apartment.street_1}</p>
-          <p>{apartment.street_2}</p>
-          <p>{apartment.city}</p>
-          <p>{apartment.postal_code}</p>
-          <p>{apartment.state}</p>
-          <p>{apartment.country}</p>
-          <hr/>
-          <br/>
-        </div>
-      )
-    })
     return (
       <React.Fragment>
         <Navbar color="light" light expand="md">
@@ -126,7 +112,8 @@ export default class Routes extends React.Component {
               render={
                 (props) =>
                 <Apartments
-                  allApartments={ allApartments }
+                  apartments={ apartments }
+                  componentDidMount={ this.componentDidMount }
                 />
               }
             />
